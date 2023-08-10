@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import Header from './components/Header'
-import FeedbackItem from './components/FeedbackItem'
 
 // Dummy data
 import { data } from './data/FeedbackData';
 import FeedbackList from './components/FeedbackList';
+import FeedbackStats from './components/FeedbackStats';
 
 const App = () => {
     const [feedbackData, setFeedbackData] = useState(data);
 
     const deleteFeedbackItem = (id) => {
-        setFeedbackData(feedbackData.filter(item => item.id !== id));
+        if(window.confirm('Are you sure you want to delete?')){
+            setFeedbackData(feedbackData.filter(item => item.id !== id));
+        }
     }
 
     return (
         <>
             <Header text='Feedback UI' />
             <div className='container'>
+                <FeedbackStats feedbackItems={feedbackData} />
                 <FeedbackList feedbackItems={feedbackData}
                     onDeleteFeedbackItem={deleteFeedbackItem} />
             </div>
