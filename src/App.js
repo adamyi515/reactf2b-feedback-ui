@@ -5,6 +5,7 @@ import Header from './components/Header'
 import { data } from './data/FeedbackData';
 import FeedbackList from './components/FeedbackList';
 import FeedbackStats from './components/FeedbackStats';
+import FeedbackForm from './components/FeedbackForm';
 
 const App = () => {
     const [feedbackData, setFeedbackData] = useState(data);
@@ -19,6 +20,7 @@ const App = () => {
         <>
             <Header text='Feedback UI' />
             <div className='container'>
+                <FeedbackForm />
                 <FeedbackStats feedbackItems={feedbackData} />
                 <FeedbackList feedbackItems={feedbackData}
                     onDeleteFeedbackItem={deleteFeedbackItem} />
