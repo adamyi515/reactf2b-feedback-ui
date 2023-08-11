@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import Card from './shared/Card'
 import Button from './shared/Button';
+import RatingSelect from './RatingSelect';
 
 const FeedbackForm = () => {
     const [text, setText] = useState('');
+    const [rating, setRating] = useState(0);
     const [isDisabled, setIsDisabled] = useState(true);
     const [msg, setMsg] = useState(null);
     
@@ -27,7 +29,7 @@ const FeedbackForm = () => {
     const handleSubmit = ev => {
         ev.preventDefault();
         if(text.length >= 10){
-            console.log('Submitted');
+            
         }
     }
 
@@ -36,6 +38,7 @@ const FeedbackForm = () => {
         <Card>
             <form onSubmit={handleSubmit}>
                 <h2>How would you rate your service with us?</h2>
+                <RatingSelect onSetRating={setRating} />
                 <div className='input-group'>
                     <input type='text' placeholder='Write a review' onChange={handleChange}
                         value={text} />
