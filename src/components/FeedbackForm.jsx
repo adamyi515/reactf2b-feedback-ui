@@ -1,17 +1,34 @@
 import React, { useState } from 'react'
-import Card from '../shared/Card'
-import Button from '../shared/Button';
+import Card from './shared/Card'
+import Button from './shared/Button';
 
 const FeedbackForm = () => {
     const [text, setText] = useState('');
+    const [isDisabled, setIsDisabled] = useState(true);
+    const [msg, setMsg] = useState(null);
     
     // Event handlers //////////////////////////////////
     const handleChange = ev => {
-        setText(ev.target.value);
+        setText(ev.target.value)
+
+        if(ev.target.value.length === 0){
+            setMsg(null);
+            setIsDisabled(true);
+        } else if(ev.target.value.length < 10){
+            setMsg('Text must be at least 10 characters.');
+            setIsDisabled(true);
+        } else {
+            setMsg(null);
+            setIsDisabled(false);
+        }
+
     }
 
     const handleSubmit = ev => {
-        console.log(ev.target.value)
+        ev.preventDefault();
+        if(text.length >= 10){
+            console.log('Submitted');
+        }
     }
 
 
@@ -22,8 +39,9 @@ const FeedbackForm = () => {
                 <div className='input-group'>
                     <input type='text' placeholder='Write a review' onChange={handleChange}
                         value={text} />
-                    <Button type='submit' version='secondary'>Send</Button>
+                    <Button type='submit' version='secondary' isDisabled={isDisabled}>Send</Button>
                 </div>
+                {msg && msg}
             </form>
         </Card>
     )

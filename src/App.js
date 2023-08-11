@@ -9,7 +9,7 @@ import FeedbackForm from './components/FeedbackForm';
 
 const App = () => {
     const [feedbackData, setFeedbackData] = useState(data);
-
+    
     const deleteFeedbackItem = (id) => {
         if(window.confirm('Are you sure you want to delete?')){
             setFeedbackData(feedbackData.filter(item => item.id !== id));
