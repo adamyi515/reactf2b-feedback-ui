@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-const RatingSelect = ({ onSetRating }) => {
-    const [selected, setSelected] = useState(0);
+const RatingSelect = ({ onSetRating, rating }) => {
+    const [selected, setSelected] = useState(rating);
     
     // Event Handlers
     const handleChange = ev => {

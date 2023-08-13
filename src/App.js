@@ -18,18 +18,18 @@ const App = () => {
     }
 
     const addFeedbackItem = (newItem) => {
-        console.log(newItem);
+        setFeedbackData([...feedbackData, newItem]);
     }
 
     return (
         <>
             <Header text='Feedback UI' />
             <div className='container'>
-                <FeedbackForm />
+                <FeedbackForm onAddFeedbackItem={addFeedbackItem} />
                 <FeedbackStats feedbackItems={feedbackData} />
                 <FeedbackList feedbackItems={feedbackData}
                     onDeleteFeedbackItem={deleteFeedbackItem}
-                    onAddFeedbackItem={addFeedbackItem} />
+                     />
             </div>
         </>
     )
