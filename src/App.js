@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
+// Context API
+import { FeedbackProvider } from './context/FeedbackContext';
+
 // React router
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -29,25 +32,27 @@ const App = () => {
     }
 
     return (
-        <Router>
-            <Header text='Feedback UI' />
-            <div className='container'>
-                <Routes>
-                    <Route path='/' exact element={
-                        <>
-                            <FeedbackForm onAddFeedbackItem={addFeedbackItem} />
-                            <FeedbackStats feedbackItems={feedbackData} />
-                            <FeedbackList feedbackItems={feedbackData}
-                                onDeleteFeedbackItem={deleteFeedbackItem}
-                                />
-                        </>
-                    } />
-                    <Route path='/about' element={<AboutPage />} />
-                </Routes>
+        <FeedbackProvider>
+            <Router>
+                <Header text='Feedback UI' />
+                <div className='container'>
+                    <Routes>
+                        <Route path='/' exact element={
+                            <>
+                                <FeedbackForm onAddFeedbackItem={addFeedbackItem} />
+                                <FeedbackStats feedbackItems={feedbackData} />
+                                <FeedbackList feedbackItems={feedbackData}
+                                    onDeleteFeedbackItem={deleteFeedbackItem}
+                                    />
+                            </>
+                        } />
+                        <Route path='/about' element={<AboutPage />} />
+                    </Routes>
 
-                <AboutIconLink />
-            </div>
-        </Router>
+                    <AboutIconLink />
+                </div>
+            </Router>
+        </FeedbackProvider>
     )
 }
 
