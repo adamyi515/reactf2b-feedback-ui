@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react'
+
+// React router
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// Components
 import Header from './components/Header'
+import AboutPage from './pages/AboutPage';
 
 // Dummy data
 import { data } from './data/FeedbackData';
@@ -22,16 +28,23 @@ const App = () => {
     }
 
     return (
-        <>
+        <Router>
             <Header text='Feedback UI' />
             <div className='container'>
-                <FeedbackForm onAddFeedbackItem={addFeedbackItem} />
-                <FeedbackStats feedbackItems={feedbackData} />
-                <FeedbackList feedbackItems={feedbackData}
-                    onDeleteFeedbackItem={deleteFeedbackItem}
-                     />
+                <Routes>
+                    <Route path='/' exact element={
+                        <>
+                            <FeedbackForm onAddFeedbackItem={addFeedbackItem} />
+                            <FeedbackStats feedbackItems={feedbackData} />
+                            <FeedbackList feedbackItems={feedbackData}
+                                onDeleteFeedbackItem={deleteFeedbackItem}
+                                />
+                        </>
+                    } />
+                    <Route path='/about' element={<AboutPage />} />
+                </Routes>
             </div>
-        </>
+        </Router>
     )
 }
 
