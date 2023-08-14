@@ -40,8 +40,8 @@ const App = () => {
                         <Route path='/' exact element={
                             <>
                                 <FeedbackForm onAddFeedbackItem={addFeedbackItem} />
-                                <FeedbackStats feedbackItems={feedbackData} />
-                                <FeedbackList feedbackItems={feedbackData}
+                                <FeedbackStats />
+                                <FeedbackList 
                                     onDeleteFeedbackItem={deleteFeedbackItem}
                                     />
                             </>

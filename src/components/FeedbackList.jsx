@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react';
+import FeedbackContext from '../context/FeedbackContext';
+
+// Components
 import FeedbackItem from './FeedbackItem'
 
-const FeedbackList = ({ feedbackItems, onDeleteFeedbackItem }) => {
+const FeedbackList = ({ onDeleteFeedbackItem }) => {
+    const { feedbackData } = useContext(FeedbackContext);
+
     return (
         <div className='feedback-list'>
             {
-                feedbackItems.length > 0 ? (
+                feedbackData.length > 0 ? (
                     <>
-                        {feedbackItems.map(item => <FeedbackItem item={item} 
+                        {feedbackData.map(item => <FeedbackItem item={item} 
                             onDeleteFeedbackItem={onDeleteFeedbackItem}/>)}
                     </>
                 ) : (

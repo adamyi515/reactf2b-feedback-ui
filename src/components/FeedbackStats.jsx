@@ -1,17 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useContext } from 'react'
+import FeedbackContext from '../context/FeedbackContext';
 
-const FeedbackStats = ({ feedbackItems }) => {
+
+const FeedbackStats = () => {
+    const { feedbackData } = useContext(FeedbackContext);
+
+
     // Calculate the average rating.
-    let averageRating = feedbackItems.reduce((acc, cur) => {
+    let averageRating = feedbackData.reduce((acc, cur) => {
         return acc + cur.rating
-    }, 0) / feedbackItems.length;
+    }, 0) / feedbackData.length;
 
     averageRating = averageRating.toFixed(2);
 
 
     return (
         <div className='feedback-stats'>
-            <h4>{ feedbackItems.length } Reviews</h4>
+            <h4>{ feedbackData.length } Reviews</h4>
             <h4>Average rating: { isNaN(averageRating) ? 0 : averageRating }</h4>
         </div>
     )
