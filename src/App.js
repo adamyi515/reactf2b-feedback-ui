@@ -21,12 +21,6 @@ const App = () => {
     const [feedbackData, setFeedbackData] = useState(data);
 
     // Event handlers //////////////////////////////////////////////////////////////
-    const deleteFeedbackItem = (id) => {
-        if(window.confirm('Are you sure you want to delete?')){
-            setFeedbackData(feedbackData.filter(item => item.id !== id));
-        }
-    }
-
     const addFeedbackItem = (newItem) => {
         setFeedbackData([...feedbackData, newItem]);
     }
@@ -41,9 +35,7 @@ const App = () => {
                             <>
                                 <FeedbackForm onAddFeedbackItem={addFeedbackItem} />
                                 <FeedbackStats />
-                                <FeedbackList 
-                                    onDeleteFeedbackItem={deleteFeedbackItem}
-                                    />
+                                <FeedbackList />
                             </>
                         } />
                         <Route path='/about' element={<AboutPage />} />

@@ -9,9 +9,24 @@ export const FeedbackProvider = ({ children }) => {
         text: 'This is a dummy data from the Context file'
     }])
 
+    // Event Handlers //////////////////////////////////
+    const deleteFeedbackItem = (id) => {
+        if(window.confirm('Are you sure you want to delete?')){
+            setFeedbackData(feedbackData.filter(item => item.id !== id));
+        }
+    }
+
+    const addFeedbackItem = (newItem) => {
+        setFeedbackData([...feedbackData, newItem]);
+    }
+
+
+
     return(
         <FeedbackContext.Provider value={{
-            feedbackData
+            feedbackData,
+            onDeleteFeedbackItem: deleteFeedbackItem,
+            onAddFeedbackItem: addFeedbackItem
         }}>
             { children }
         </FeedbackContext.Provider>

@@ -4,8 +4,8 @@ import FeedbackContext from '../context/FeedbackContext';
 // Components
 import FeedbackItem from './FeedbackItem'
 
-const FeedbackList = ({ onDeleteFeedbackItem }) => {
-    const { feedbackData } = useContext(FeedbackContext);
+const FeedbackList = () => {
+    const { feedbackData, onDeleteFeedbackItem } = useContext(FeedbackContext);
 
     return (
         <div className='feedback-list'>
