@@ -5,14 +5,14 @@ import FeedbackContext from '../context/FeedbackContext';
 import FeedbackItem from './FeedbackItem'
 
 const FeedbackList = () => {
-    const { feedbackData } = useContext(FeedbackContext);
+    const { feedbacksData } = useContext(FeedbackContext);
 
     return (
         <div className='feedback-list'>
             {
-                feedbackData.length > 0 ? (
+                feedbacksData.length > 0 ? (
                     <>
-                        {feedbackData.map(item => <FeedbackItem item={item} />)}
+                        {feedbacksData.map(item => <FeedbackItem item={item} key={item.id}/>)}
                     </>
                 ) : (
                     <>

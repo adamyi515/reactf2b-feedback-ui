@@ -1,32 +1,57 @@
 import { createContext, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
 
 const FeedbackContext = createContext();
 
 export const FeedbackProvider = ({ children }) => {
-    const [feedbackData, setFeedbackData] = useState([{
-        id: 1,
-        rating: 8,
-        text: 'This is a dummy data from the Context file'
-    }])
+    const [feedbacksData, setFeedbacksData] = useState([]);
+
+    const [feedbackEditData, setFeedbacEditData] = useState({
+        item: {},
+        edit: false
+    })
 
     // Event Handlers //////////////////////////////////
     const deleteFeedbackItem = (id) => {
         if(window.confirm('Are you sure you want to delete?')){
-            setFeedbackData(feedbackData.filter(item => item.id !== id));
+            setFeedbacksData(feedbacksData.filter(item => item.id !== id));
         }
     }
 
     const addFeedbackItem = (newItem) => {
-        setFeedbackData([...feedbackData, newItem]);
+        newItem.id = uuidv4();
+        setFeedbacksData([...feedbacksData, newItem]);
     }
 
+    const updateFeedbackItem = (id, editedItem) => {
+        setFeedbacksData(feedbacksData.map(item => {
+            if(item.id === id){
+                return {
+                    ...item,
+                    ...editedItem
+                }
+            } else {
+                return item;
+            }
+        }))
+    }
 
+    const editFeedbackItem = (item) => {
+        setFeedbacEditData({
+            item,
+            edit: true
+        })
+    }
 
     return(
         <FeedbackContext.Provider value={{
-            feedbackData,
+            feedbacksData,
+            feedbackEditData,
             onDeleteFeedbackItem: deleteFeedbackItem,
-            onAddFeedbackItem: addFeedbackItem
+            onAddFeedbackItem: addFeedbackItem,
+            onEditFeedbackItem: editFeedbackItem,
+            onUpdateFeedbackItem: updateFeedbackItem
         }}>
             { children }
         </FeedbackContext.Provider>

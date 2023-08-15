@@ -4,7 +4,8 @@ import { FaTimes, FaEdit } from 'react-icons/fa';
 import Card from './shared/Card'
 
 const FeedbackItem = ({ item }) => {
-    const { onDeleteFeedbackItem } = useContext(FeedbackContext);
+    const { onDeleteFeedbackItem, onEditFeedbackItem } = useContext(FeedbackContext);
+
 
     return (
         <Card >
@@ -12,7 +13,7 @@ const FeedbackItem = ({ item }) => {
             <button className='close' onClick={() => onDeleteFeedbackItem(item.id)}>
                 <FaTimes color='purple' />
             </button>
-            <button className='edit'>
+            <button className='edit' onClick={() => onEditFeedbackItem(item)}>
                 <FaEdit color='purple' />
             </button>
             <div className='text-display'>

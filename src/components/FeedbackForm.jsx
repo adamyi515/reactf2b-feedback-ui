@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react'
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState, useContext, useEffect } from 'react'
 import FeedbackContext from '../context/FeedbackContext';
 
 import Card from './shared/Card'
@@ -12,9 +11,20 @@ const FeedbackForm = () => {
     const [isDisabled, setIsDisabled] = useState(true);
     const [msg, setMsg] = useState(null);
 
-    const { onAddFeedbackItem } = useContext(FeedbackContext);
+    // Context API
+    const { feedbackEditData, onAddFeedbackItem, onUpdateFeedbackItem } = useContext(FeedbackContext);
     
-    // Event handlers //////////////////////////////////
+    // Side effect
+    useEffect(() => {
+        if(feedbackEditData.edit){
+            setIsDisabled(false);
+            setText(feedbackEditData.item.text);
+            setRating(feedbackEditData.item.rating)
+        }
+    }, [feedbackEditData]);
+
+
+    // Event handlers //////////////////////////////////////////////////////////////////
     const handleChange = ev => {
         setText(ev.target.value)
 
@@ -37,11 +47,15 @@ const FeedbackForm = () => {
         // Make sure rating & text is required.
         if(text.length >= 10 && rating){
             const newItem = {
-                id: uuidv4(),
                 rating,
                 text
             }
-            onAddFeedbackItem(newItem);
+
+            if(feedbackEditData.edit){
+                onUpdateFeedbackItem(feedbackEditData.item.id, newItem);
+            } else {
+                onAddFeedbackItem(newItem);
+            }
 
             // Reset the input values.
             setText('');
@@ -56,7 +70,7 @@ const FeedbackForm = () => {
         <Card>
             <form onSubmit={handleSubmit}>
                 <h2>How would you rate your service with us?</h2>
-                <RatingSelect onSetRating={setRating} rating={rating} />
+                <RatingSelect onSetRating={setRating} rating={rating}  />
                 <div className='input-group'>
                     <input type='text' placeholder='Write a review' onChange={handleChange}
                         value={text} />
