@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -6,11 +6,22 @@ const FeedbackContext = createContext();
 
 export const FeedbackProvider = ({ children }) => {
     const [feedbacksData, setFeedbacksData] = useState([]);
-
     const [feedbackEditData, setFeedbacEditData] = useState({
         item: {},
         edit: false
     })
+
+    useEffect(() => {
+        fetchFeedbacks();
+    }, []);
+
+    // API Functions //////////////////////////////////////////////////
+    const fetchFeedbacks = async () => {
+        const response = await fetch(`http://localhost:5000/feedbacks?_sort=id`);
+        const data = await response.json();
+        setFeedbacksData(data);
+    }
+
 
     // Event Handlers //////////////////////////////////
     const deleteFeedbackItem = (id) => {
