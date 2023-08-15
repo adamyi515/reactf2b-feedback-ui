@@ -15,32 +15,53 @@ export const FeedbackProvider = ({ children }) => {
         fetchFeedbacks();
     }, []);
 
-    // API Functions //////////////////////////////////////////////////
+    // Functions //////////////////////////////////////////////////
     const fetchFeedbacks = async () => {
         const response = await fetch(`http://localhost:5000/feedbacks?_sort=id`);
         const data = await response.json();
         setFeedbacksData(data);
     }
 
-
-    // Event Handlers //////////////////////////////////
-    const deleteFeedbackItem = (id) => {
+    const deleteFeedbackItem = async (id) => {
         if(window.confirm('Are you sure you want to delete?')){
+            await fetch(`http://localhost:5000/feedbacks/${id}`, {
+                method: 'DELETE',
+            });
+
             setFeedbacksData(feedbacksData.filter(item => item.id !== id));
         }
     }
 
-    const addFeedbackItem = (newItem) => {
-        newItem.id = uuidv4();
-        setFeedbacksData([...feedbacksData, newItem]);
+    const addFeedbackItem = async (newItem) => {
+        const response = await fetch(`http://localhost:5000/feedbacks`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(newItem)
+        });
+
+        const data = await response.json();
+        setFeedbacksData([...feedbacksData, data]);
     }
 
-    const updateFeedbackItem = (id, editedItem) => {
+    const updateFeedbackItem = async (id, editedItem) => {
+        const response = await fetch(`http://localhost:5000/feedbacks/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(editedItem)
+        });
+
+        const data = await response.json();
+        console.log(data);
+
         setFeedbacksData(feedbacksData.map(item => {
             if(item.id === id){
                 return {
                     ...item,
-                    ...editedItem
+                    ...data
                 }
             } else {
                 return item;
